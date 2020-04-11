@@ -1,26 +1,19 @@
 import pandas as pd
 import plotly.express as px
 
-from data.yahoofinance import YahooFinance
-
-yahfin = YahooFinance()
-df = yahfin.historical_closing_price(ticker='TSLA')
+from data.metric import Metric
 
 
 class Historical:
-    def __init__(self, tickers):
-        self.tickers = tickers
-        self.yahfin = YahooFinance()
+    def __init__(self, ticker):
+        self.ticker = ticker
+        self.metric = Metric(ticker=ticker, data_api='yahoofinance')
 
-    def closing_price(self):
-        df = pd.DataFrame()
-        for ticker in self.tickers:
-            df_ticker = yahfin.historical_closing_price(ticker=ticker)
-            df_ticker['Ticker'] = ticker
-            df = pd.concat([df, df_ticker], axis=0)
+    def plot_closing_price(self):
+        df = self.metric.closing_price()
 
         fig = px.line(df, x='Date', y='Close', color = "Ticker", hover_name = "Ticker",
-                      title=f"Historical stock price of {str(self.tickers)}")
+                      title=f"Historical stock price of {str(self.ticker)}")
 
         fig.update_xaxes(
             rangeslider_visible=True,
@@ -41,5 +34,5 @@ class Historical:
 
 
 if __name__ == '__main__':
-    hist = Historical(tickers=['TSLA', '^GSPC'])
-    hist.closing_price()
+    hist = Historical(ticker=['TSLA', '^GSPC'])
+    hist.plot_closing_price()
