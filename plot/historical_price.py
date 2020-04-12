@@ -12,7 +12,7 @@ class Historical:
     def plot_closing_price(self):
         df = self.metric.closing_price()
 
-        fig = px.line(df, x='Date', y='Close', color = "Ticker", hover_name = "Ticker",
+        fig = px.line(df, x='Date', y='Close', color = "Ticker", hover_name = "Ticker", labels = {'y': 'Closing Price'},
                       title=f"Historical stock price of {str(self.ticker)}")
 
         fig.update_xaxes(
