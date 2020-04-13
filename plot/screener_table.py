@@ -8,7 +8,7 @@ class Screener:
     def __init__(self, tickers=[]):
         self.tickers = tickers
 
-    def table(self):
+    def table(self, df):
         df = pd.DataFrame({'a': [1, 3], 'b': [9, 39]})
         table = dash_table.DataTable(
             id='table',
