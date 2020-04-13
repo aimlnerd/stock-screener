@@ -1,4 +1,3 @@
-import pandas as pd
 import ast
 import dash
 import dash_core_components as dcc
@@ -8,20 +7,18 @@ from dash.dependencies import Input, Output
 from plot.historical_price import Historical
 from plot.screener_table import Screener
 
-df = pd.DataFrame({'a': [1,3], 'b': [9, 39] })
-
 
 app = dash.Dash()
 app.layout = html.Div([html.H1(children='Stock Screener'),
                        html.Div(children='A tool for stock picking.'),
-                       html.Label('Input Ticker'),
+                       html.Label('Input Ticker '),
                        dcc.Input(id='input_ticker',
                                  placeholder='Enter list of Ticker',
                                  type='text',
                                  value="['TSLA', 'APL']"),
                        dcc.Graph(id='historical_price'),
                        html.Div(children=[html.H4(children='Top value stocks'),
-                        Screener().table()
+                       Screener().table()
                        ])
                        ])
 
