@@ -24,16 +24,16 @@ class Metric:
         if isinstance(self.ticker, (list)):
             df_master = pd.DataFrame()
             for ticker in self.ticker:
-                df = pd.DataFrame.from_dict({'ticker': [ticker]}, orient='columns')
+                df = pd.DataFrame.from_dict({'Ticker': [ticker]}, orient='columns')
                 df_bs = self.__latest_qtr_balance_sheet(ticker)
 
                 latest_qtr_total_assets = self._get_metric(df=df_bs, metric='Total Assets')
                 latest_qtr_total_liabilities = self._get_metric(df=df_bs, metric='Total Liab')
-                df['latest_qtr_total_solvency_ratio'] = self._solvency_ratio(assets=latest_qtr_total_assets, liabilities=latest_qtr_total_liabilities)
+                df['Latest QTR Total Solvency Ratio'] = self._solvency_ratio(assets=latest_qtr_total_assets, liabilities=latest_qtr_total_liabilities)
 
                 latest_qtr_total_cash = self._get_metric(df=df_bs, metric='Cash')
                 latest_qtr_total_short_long_term_debt = self._get_metric(df=df_bs, metric='Short Long Term Debt')
-                df['latest_qtr_net_debt'] = self._net_debt(debt=latest_qtr_total_short_long_term_debt, cash=latest_qtr_total_cash)
+                df['Latest QTR Net Debt'] = self._net_debt(debt=latest_qtr_total_short_long_term_debt, cash=latest_qtr_total_cash)
                 df_master = pd.concat([df_master, df], axis=0)
         return df_master
 

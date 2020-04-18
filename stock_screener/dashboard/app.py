@@ -7,8 +7,9 @@ from dash.dependencies import Input, Output
 from stock_screener.plot.historical_price import Historical
 from stock_screener.plot.screener_table import Screener
 
+external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 
-app = dash.Dash()
+app = dash.Dash(__name__)
 app.config.suppress_callback_exceptions=False
 app.title = "Stock Screener"
 
