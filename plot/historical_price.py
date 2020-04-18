@@ -5,7 +5,7 @@ from data.metric import Metric
 
 
 class Historical:
-    def __init__(self, ticker):
+    def __init__(self, ticker, data_api='yahoofinance'):
         self.ticker = ticker
         self.metric = Metric(ticker=ticker, data_api='yahoofinance')
 
