@@ -22,7 +22,7 @@ class Metric:
         if isinstance(self.ticker, (list)):
             df_master = pd.DataFrame()
             for ticker in self.ticker:
-                df = pd.DataFrame(data={'ticker': ticker})
+                df = pd.DataFrame.from_dict({'ticker': [ticker]}, orient='columns')
                 df_bs = self.latest_qtr_balance_sheet(ticker)
 
                 latest_qtr_total_assets = self._get_metric(df=df_bs, metric='Total Assets')
@@ -40,7 +40,6 @@ class Metric:
 
     def _net_debt(self, debt, cash):
         return debt-cash
-
 
     def _solvency_ratio(self, assets, liabilities):
         return assets/liabilities
