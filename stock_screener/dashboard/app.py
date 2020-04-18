@@ -9,6 +9,9 @@ from stock_screener.plot.screener_table import Screener
 
 
 app = dash.Dash()
+app.config.suppress_callback_exceptions=False
+app.title = "Stock Screener"
+
 app.layout = html.Div([html.H1(children='Stock Screener'),
                        html.H3(children='A tool for stock picking'),
                        html.Label('Input Ticker '),
@@ -24,7 +27,7 @@ app.layout = html.Div([html.H1(children='Stock Screener'),
                                 id='screener-table-container')
 
                        ])
-
+app.title
 
 ######### Callbacks ##################
 
