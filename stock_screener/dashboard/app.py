@@ -4,8 +4,8 @@ import dash_core_components as dcc
 import dash_html_components as html
 from dash.dependencies import Input, Output
 
-from plot.historical_price import Historical
-from plot.screener_table import Screener
+from stock_screener.plot.historical_price import Historical
+from stock_screener.plot.screener_table import Screener
 
 
 app = dash.Dash()

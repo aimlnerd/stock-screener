@@ -1,6 +1,6 @@
 import logging
 import pandas as pd
-from data_api.yahoofinance import YahooFinance
+from stock_screener.data_api.yahoofinance import YahooFinance
 
 LOG_FORMAT = ('%(levelname) -10s %(asctime)s %(name) -30s %(funcName) '
               '-35s %(lineno) -5d: %(message)s')

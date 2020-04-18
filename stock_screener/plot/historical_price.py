@@ -1,7 +1,7 @@
 import pandas as pd
 import plotly.express as px
 
-from data.metric import Metric
+from stock_screener.data.metric import Metric
 
 
 class Historical:
