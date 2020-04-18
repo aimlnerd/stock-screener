@@ -48,7 +48,7 @@ class Metric:
         return float(df.loc[metric])
 
     def _net_debt(self, debt, cash):
-        return debt-cash
+        return f'${debt-cash:,}'
 
     def _solvency_ratio(self, assets, liabilities):
         return round(assets/liabilities, ndigits=4)
