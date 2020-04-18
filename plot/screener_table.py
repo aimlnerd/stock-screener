@@ -12,7 +12,7 @@ class Screener:
         self.metric = metric
 
     def table(self):
-        df = Metric(ticker=self.tickers , data_api=self.data_api, metric=self.metric)()
+        df = Metric(ticker=self.tickers, data_api=self.data_api, metric=self.metric)()
         table = dash_table.DataTable(
             id='table',
             columns=[{"name": i, "id": i} for i in df.columns],
@@ -30,7 +30,7 @@ class Screener:
             page_current=0,
             page_size=10,
             style_cell={'padding': '5px'},
-            style_header = {'backgroundColor': 'white', 'fontWeight': 'bold'}
+            style_header = {'backgroundColor': 'blue', 'fontWeight': 'bold'}
         )
         return table
 
