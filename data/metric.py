@@ -51,7 +51,7 @@ class Metric:
         return debt-cash
 
     def _solvency_ratio(self, assets, liabilities):
-        return assets/liabilities
+        return round(assets/liabilities, ndigits=4)
 
     def price_to_earning(self, ticker):
         pass
