@@ -18,7 +18,7 @@ app.layout = html.Div([html.H1(children='Stock Screener'),
                                  value="['TSLA', 'APL']"),
                        dcc.Graph(id='historical_price'),
                        html.Div(children=[html.H4(children='Top value stocks'),
-                       Screener().table()
+                       Screener(ticker=['TSLA', 'AAPL'], data_api='yahoofinance', metric=['balance_sheet']).table()
                        ])
                        ])
 
@@ -29,7 +29,7 @@ app.layout = html.Div([html.H1(children='Stock Screener'),
 )
 def input_to_hist_price(ticker):
     lst_ticker = ast.literal_eval(ticker)
-    return Historical(ticker=lst_ticker).plot_closing_price()
+    return Historical(ticker=lst_ticker, data_api='yahoofinance').plot_closing_price()
 
 
 if __name__ == '__main__':
