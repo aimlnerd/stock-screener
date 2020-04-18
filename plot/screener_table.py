@@ -2,16 +2,38 @@ import dash_table
 import pandas as pd
 import plotly.express as px
 
+from data.metric import Metric
 
 
 class Screener:
-    def __init__(self, tickers=[]):
-        self.tickers = tickers
+    def __init__(self, ticker=[], data_api='yahoofinance', metric=['balance_sheet']):
+        self.tickers = ticker
+        self.data_api = data_api
+        self.metric = metric
 
-    def table(self, df):
-        df = pd.DataFrame({'a': [1, 3], 'b': [9, 39]})
+    def table(self):
+        df = Metric(ticker=self.tickers , data_api=self.data_api, metric=self.metric)()
         table = dash_table.DataTable(
             id='table',
             columns=[{"name": i, "id": i} for i in df.columns],
-            data=df.to_dict('records'))
+            data=df.to_dict('records'),
+            editable=True,
+            filter_action="native",
+            sort_action="native",
+            sort_mode="multi",
+            column_selectable="single",
+            row_selectable="multi",
+            row_deletable=True,
+            selected_columns=[],
+            selected_rows=[],
+            page_action="native",
+            page_current=0,
+            page_size=10,
+            style_cell={'padding': '5px'},
+            style_header = {'backgroundColor': 'white', 'fontWeight': 'bold'}
+        )
         return table
+
+
+if __name__ == '__main__':
+    Screener(ticker=['TSLA', 'AAPL'], data_api='yahoofinance', metric=['balance_sheet']).table()
