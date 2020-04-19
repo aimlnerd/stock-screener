@@ -28,7 +28,6 @@ app.layout = html.Div([html.H1(children='Stock Screener'),
                                 id='screener-table-container')
 
                        ])
-app.title
 
 ######### Callbacks ##################
 
