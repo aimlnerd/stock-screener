@@ -48,7 +48,7 @@ class Metric:
         for ticker in self.ticker:
             df = self.data_api(ticker=ticker).info()
             df_master = pd.concat([df_master, df[metric]], axis=0)
-        return df_master
+        return df_master.drop(columns=['ticker'])
 
     def _latest_qtr_data(self, ticker, data_type):
         if data_type == 'balance_sheet':
@@ -84,7 +84,7 @@ class Metric:
         df_master = pd.DataFrame()
         for metric in self.metric:
             df = self.metric_fun[metric]()
-            df_master = pd.concat([df_master, df], axis=0)
+            df_master = pd.concat([df_master, df], axis=1)
         return  df_master.reset_index(drop=True)
 
     def _get_metric(self, df, metric):
@@ -122,7 +122,7 @@ class Metric:
 
 
 if __name__ == '__main__':
-    metric = Metric(ticker=['TSLA', 'SABR'], data_api='yahoofinance', metric=['info', 'balance_sheet'])
+    metric = Metric(ticker=['TSLA', 'SABR'], data_api='yahoofinance', metric=['balance_sheet', 'info'])
     df = metric()
     metric.info()
     metric.financial_metric()
