@@ -10,7 +10,7 @@ from stock_screener.plot.screener_table import Screener
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 
 app = dash.Dash(__name__)
-app.config.suppress_callback_exceptions=False
+app.config.suppress_callback_exceptions = False
 app.title = "Stock Screener"
 
 app.layout = html.Div([html.H1(children='Stock Screener'),
@@ -47,7 +47,7 @@ def input_to_hist_price(ticker):
 )
 def input_to_screener_table(ticker):
     lst_ticker = ast.literal_eval(ticker)
-    return Screener(ticker=lst_ticker, data_api='yahoofinance', metric=['balance_sheet']).table()
+    return Screener(ticker=lst_ticker, data_api='yahoofinance', metric=['balance_sheet', 'info']).table()
 
 
 if __name__ == '__main__':

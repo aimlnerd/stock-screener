@@ -34,4 +34,4 @@ class Screener:
 
 
 if __name__ == '__main__':
-    Screener(ticker=['TSLA', 'AAPL'], data_api='yahoofinance', metric=['balance_sheet']).table()
+    Screener(ticker=['TSLA', 'AAPL'], data_api='yahoofinance', metric=['balance_sheet', 'info']).table()
