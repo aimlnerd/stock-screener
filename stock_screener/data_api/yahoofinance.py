@@ -18,8 +18,22 @@ class YahooFinance:
         df = self.ticker.quarterly_balance_sheet
         return df
 
+    def quarterly_financials(self):
+        df = self.ticker.quarterly_financials
+        return df
+
+    def info(self, metric=None):
+        df = pd.DataFrame.from_dict(self.ticker.info, orient='index').T
+        df = df.rename(columns={'symbol': 'ticker'})
+        return df
+
 
 if __name__ == '__main__':
     yahfin_ticker = YahooFinance(ticker='TSLA')
+    yahfin_ticker.info()
+    ev = yahfin_ticker.info["enterpriseValue"]
+    ebit = yahfin_ticker.financials.iloc[7, 0]
+
     df_price = yahfin_ticker.price()
     df_bs_ratios = yahfin_ticker.quarterly_balance_sheet()
+    df_quarterly_financials= yahfin_ticker.quarterly_financials()

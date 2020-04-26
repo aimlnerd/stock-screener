@@ -13,19 +13,62 @@ class Metric:
         self.metric = metric
         if data_api=='yahoofinance':
             self.data_api = YahooFinance
-        self.metric_fun = {'balance_sheet': self.balance_sheet_metric}
+        self.metric_fun = {'balance_sheet': self.balance_sheet_metric,
+                           'info': self.info}
 
-    def __latest_qtr_balance_sheet(self, ticker):
-        df = self.data_api(ticker=ticker).quarterly_balance_sheet()
+    def info(self, metric=None):
+        if not metric:
+            metric = ['ticker',
+                      'forwardPE',
+                      'beta',
+                      'industry',
+                      'payoutRatio',
+                      'yield',
+                      'marketCap',
+                      'priceToSalesTrailing12Months',
+                      'forwardPE',
+                      'fiftyTwoWeekHigh',
+                      'fiftyTwoWeekLow',
+                      'dividendYield',
+                      'enterpriseToRevenue',
+                      'profitMargins',
+                      'enterpriseToEbitda',
+                      '52WeekChange',
+                      'forwardEps',
+                      'revenueQuarterlyGrowth',
+                      'annualReportExpenseRatio',
+                      'bookValue',
+                      'trailingEps',
+                      'priceToBook',
+                      'enterpriseValue',
+                      'earningsQuarterlyGrowth',
+                      'morningStarOverallRating',
+                      'fiveYearAverageReturn']
+        df_master = pd.DataFrame()
+        for ticker in self.ticker:
+            df = self.data_api(ticker=ticker).info()
+            df_master = pd.concat([df_master, df[metric]], axis=0)
+        return df_master
+
+    def _latest_qtr_data(self, ticker, data_type):
+        if data_type == 'balance_sheet':
+            df = self.data_api(ticker=ticker).quarterly_balance_sheet()
+        if data_type == 'financials':
+            df = self.data_api(ticker=ticker).quarterly_financials()
         latest_qtr = max(df.columns)
         return df[latest_qtr]
+
+    def financial_metric(self):
+        for ticker in self.ticker:
+            df =  self._latest_qtr_data(ticker, data_type="financials")
+            latest_ebit = self._get_metric(df=df, metric='Ebit')
 
     def balance_sheet_metric(self):
         if isinstance(self.ticker, (list)):
             df_master = pd.DataFrame()
             for ticker in self.ticker:
                 df = pd.DataFrame.from_dict({'Ticker': [ticker]}, orient='columns')
-                df_bs = self.__latest_qtr_balance_sheet(ticker)
+                df_bs = self._latest_qtr_data(ticker, data_type="balance_sheet")
 
                 latest_qtr_total_assets = self._get_metric(df=df_bs, metric='Total Assets')
                 latest_qtr_total_liabilities = self._get_metric(df=df_bs, metric='Total Liab')
@@ -79,7 +122,11 @@ class Metric:
 
 
 if __name__ == '__main__':
-    metric = Metric(ticker=['TSLA', 'SABR'], data_api='yahoofinance', metric=['balance_sheet'])
+    metric = Metric(ticker=['TSLA', 'SABR'], data_api='yahoofinance', metric=['info', 'balance_sheet'])
+    df = metric()
+    metric.info()
+    metric.financial_metric()
     df_metric = metric()
     metric.balance_sheet_metric()
     metric.closing_price()
+
